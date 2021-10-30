@@ -1,17 +1,37 @@
 <template>
+  <ul>
+    <li v-for="(item, i) in items" :key="i" data-item="{{item.id}}">
+      <a title="{{ item.href }}">
+        <article>
+          <span>{{ item.href }}</span>
+
+          <div class="item-controls">
+            <button type="button" @click="handleUpdateItem(item.id)">
+              Edit
+            </button>
+
+            <button type="button" @click="handleDeleteItem(item.id)">
+              Delete
+            </button>
+
+            <button type="button" @click="handleCopyItemData(item.id)">
+              Copy URL
+            </button>
+          </div>
+        </article>
+      </a>
+    </li>
+  </ul>
+
+  <button type="button" @click="handleClick">Add an item</button>
+
   <div class="input-container" v-if="toggleModal">
     <form action="#">
-      <input type="text" @change="handleChange" />
+      <input type="text" :value="input" @change="handleChange" />
 
       <button type="submit" @click.prevent="handleSubmit">Add</button>
     </form>
   </div>
-
-  <ul>
-    <li v-for="(item, i) in items" :key="i">{{ item.title }}</li>
-  </ul>
-
-  <button type="button" @click="handleClick">Add an item</button>
 </template>
 
 <script>
