@@ -7,7 +7,7 @@
         data-item="{{item.id}}"
         class="item"
       >
-        <a href="{{ item.href }}" title="{{ item.href }}">
+        <a href="{{item.href}}" title="item.href">
           <article class="item-body">
             <div class="item-meta">
               <span>{{ item.href }}</span>
@@ -32,11 +32,19 @@
     </ul>
   </section>
 
-  <footer>
-    <button type="button" @click="handleClick">Add an item</button>
-  </footer>
+  <div class="floating-button">
+    <button type="button" @click="handleToggleModal">
+      <i class="material-icons">add</i>
+    </button>
+  </div>
+
+  <footer></footer>
 
   <div class="input-modal" v-if="toggleModal">
+    <button class="input-modal-close-button" @click="handleToggleModal">
+      <i class="material-icons">close</i>
+    </button>
+
     <form action="#">
       <input type="text" :value="input" @change="handleChange" />
 
@@ -60,7 +68,7 @@ export default {
     };
   },
   methods: {
-    handleClick() {
+    handleToggleModal() {
       this.toggleModal = !this.toggleModal;
     },
 
@@ -119,16 +127,69 @@ export default {
 </script>
 
 <style>
+@import url(~normalize.css/normalize.css);
+@import url(~@fontsource/material-icons/index.css);
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  /* TODO Safari fix */
+  height: 100vh;
+}
+
+.item-container {
+  flex-grow: 1;
+}
+
+.item-grid {
+  padding: 0;
+  margin: 0;
+  display: grid;
+}
+
+.item {
+}
+
+.item-body {
+}
+
+.item-controls {
+}
+
+.item-meta {
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 1;
+}
+
+.floating-button button {
 }
 
 .input-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  //width: 100vw;
+  //height: 100vh;
+  z-index: 1;
+  padding: 2rem 1rem;
+}
+
+.input-modal form {
   padding: 2rem 1rem;
   margin: 1rem;
   border-radius: 4px;
