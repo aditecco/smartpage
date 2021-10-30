@@ -21,24 +21,58 @@ export default {
   data() {
     return {
       toggleModal: false,
+      editMode: false,
       input: "",
       items: [],
     };
   },
   methods: {
-    handleClick(e) {
-      console.log("click ", e);
+    handleClick() {
       this.toggleModal = !this.toggleModal;
     },
+
     handleChange(e) {
-      console.log("change ", e);
-      this.input += e.currentTarget.value;
+      this.input = e.currentTarget.value;
     },
-    handleSubmit(e) {
-      console.log("submit ", e);
-      this.items.push({ title: this.input });
+
+    handleSubmit() {
+      function Item(input) {
+        this.id = Date.now();
+        this.href = input;
+      }
+
+      if (!this.input) return;
+
+      if (this.editMode) {
+        const i = this.items.findIndex((item) => item.id === this.editMode.id);
+
+        this.items[i] = { ...this.items[i], href: this.input };
+
+        this.editMode = false;
+      } else {
+        this.items.push(new Item(this.input));
+      }
+
       this.input = "";
       this.toggleModal = false;
+    },
+
+    handleUpdateItem(id) {
+      this.editMode = { editing: true, id };
+      const which = this.items.find((item) => item.id === id);
+
+      this.toggleModal = true;
+      this.input = which.href;
+    },
+
+    handleDeleteItem(id) {
+      const which = this.items.findIndex((item) => item.id === id);
+
+      this.items.splice(which, 1);
+    },
+
+    handleCopyItemData(id) {
+      console.log(id);
     },
   },
 };
