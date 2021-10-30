@@ -1,31 +1,42 @@
 <template>
-  <ul>
-    <li v-for="(item, i) in items" :key="i" data-item="{{item.id}}">
-      <a title="{{ item.href }}">
-        <article>
-          <span>{{ item.href }}</span>
+  <section class="item-container">
+    <ul class="item-grid">
+      <li
+        v-for="(item, i) in items"
+        :key="i"
+        data-item="{{item.id}}"
+        class="item"
+      >
+        <a href="{{ item.href }}" title="{{ item.href }}">
+          <article class="item-body">
+            <div class="item-meta">
+              <span>{{ item.href }}</span>
+            </div>
 
-          <div class="item-controls">
-            <button type="button" @click="handleUpdateItem(item.id)">
-              Edit
-            </button>
+            <div class="item-controls">
+              <button type="button" @click="handleUpdateItem(item.id)">
+                Edit
+              </button>
 
-            <button type="button" @click="handleDeleteItem(item.id)">
-              Delete
-            </button>
+              <button type="button" @click="handleDeleteItem(item.id)">
+                Delete
+              </button>
 
-            <button type="button" @click="handleCopyItemData(item.id)">
-              Copy URL
-            </button>
-          </div>
-        </article>
-      </a>
-    </li>
-  </ul>
+              <button type="button" @click="handleCopyItemData(item.id)">
+                Copy URL
+              </button>
+            </div>
+          </article>
+        </a>
+      </li>
+    </ul>
+  </section>
 
-  <button type="button" @click="handleClick">Add an item</button>
+  <footer>
+    <button type="button" @click="handleClick">Add an item</button>
+  </footer>
 
-  <div class="input-container" v-if="toggleModal">
+  <div class="input-modal" v-if="toggleModal">
     <form action="#">
       <input type="text" :value="input" @change="handleChange" />
 
@@ -117,7 +128,7 @@ export default {
   margin-top: 60px;
 }
 
-.input-container {
+.input-modal {
   padding: 2rem 1rem;
   margin: 1rem;
   border-radius: 4px;
