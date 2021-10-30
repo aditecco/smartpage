@@ -14,22 +14,22 @@
         >
           <article class="item-body">
             <a href="{{item.href}}" title="item.href">
-              <div class="item-meta">
+              <div class="item-content">
                 <span>{{ item.href }}</span>
               </div>
             </a>
 
             <div class="item-controls">
               <button type="button" @click="handleUpdateItem(item.id)">
-                Edit
+                <span>Edit</span>
               </button>
 
               <button type="button" @click="handleDeleteItem(item.id)">
-                Delete
+                <span> Delete </span>
               </button>
 
               <button type="button" @click="handleCopyItemData(item.id)">
-                Copy URL
+                <span> Copy URL </span>
               </button>
             </div>
           </article>
@@ -40,7 +40,7 @@
 
   <div class="floating-button">
     <button type="button" @click="handleToggleModal">
-      <i class="material-icons">add_circle_outline</i>
+      <i class="material-icons">add</i>
     </button>
   </div>
 
@@ -209,10 +209,19 @@ footer {
   grid-template-columns: repeat(auto-fill, 300px);
   grid-gap: 30px;
   list-style: none;
+  justify-content: center;
+}
+
+@media (min-width: 600px) {
+  .item-grid {
+    padding: 60px 0;
+    grid-template-columns: repeat(auto-fill, 280px);
+    justify-content: initial;
+  }
 }
 
 .item {
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 
 .item:hover {
@@ -229,51 +238,63 @@ footer {
 .item-body {
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 10px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px 6px rgba(0, 0, 0, 0.025);
 }
 
 .item-controls {
-  display: flex;
-  justify-content: space-between;
 }
 
 .item-controls button {
+  display: inline-block;
+  width: calc(100% / 3);
   border-radius: 0;
   box-shadow: none;
   background: none;
   border: none;
-  padding: 10px;
-  flex-basis: 33.3%;
+  padding: 12px 10px 10px;
   border-top: 1px solid antiquewhite;
   font-size: small;
   cursor: pointer;
+}
+
+.item-controls button span {
+  border-bottom: 2px solid transparent;
+}
+
+.item-controls button span:hover {
+  border-bottom: 2px solid lightcoral;
 }
 
 .item-controls button + button {
   border-left: 1px solid antiquewhite;
 }
 
-.item-meta {
-  padding: 60px 20px;
+.item-content {
+  padding: 38px 20px;
+}
+
+.item-content span {
+  color: #4141fd;
+  word-wrap: break-word;
 }
 
 .floating-button {
   position: fixed;
-  bottom: 50px;
-  right: 50px;
+  bottom: 30px;
+  right: 30px;
   z-index: 1;
 }
 
 .floating-button button {
-  border-radius: 16px;
   box-shadow: 0 2px 30px 10px rgba(0, 0, 0, 0.15);
-  width: 60px;
-  height: 60px;
   background: blueviolet;
   color: whitesmoke;
   font-size: 24px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.2s ease;
   cursor: pointer;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
 }
 
 .floating-button button i {
