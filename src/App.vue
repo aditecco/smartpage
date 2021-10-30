@@ -1,6 +1,10 @@
 <template>
   <section class="item-container">
-    <div class="container">
+    <div class="blank-slate" v-show="!items.length">
+      <span>No items. Add one!</span>
+    </div>
+
+    <div class="container" v-show="items.length">
       <ul class="item-grid">
         <li
           v-for="(item, i) in items"
@@ -8,27 +12,27 @@
           data-item="{{item.id}}"
           class="item"
         >
-          <a href="{{item.href}}" title="item.href">
-            <article class="item-body">
+          <article class="item-body">
+            <a href="{{item.href}}" title="item.href">
               <div class="item-meta">
                 <span>{{ item.href }}</span>
               </div>
+            </a>
 
-              <div class="item-controls">
-                <button type="button" @click="handleUpdateItem(item.id)">
-                  Edit
-                </button>
+            <div class="item-controls">
+              <button type="button" @click="handleUpdateItem(item.id)">
+                Edit
+              </button>
 
-                <button type="button" @click="handleDeleteItem(item.id)">
-                  Delete
-                </button>
+              <button type="button" @click="handleDeleteItem(item.id)">
+                Delete
+              </button>
 
-                <button type="button" @click="handleCopyItemData(item.id)">
-                  Copy URL
-                </button>
-              </div>
-            </article>
-          </a>
+              <button type="button" @click="handleCopyItemData(item.id)">
+                Copy URL
+              </button>
+            </div>
+          </article>
         </li>
       </ul>
     </div>
@@ -36,7 +40,7 @@
 
   <div class="floating-button">
     <button type="button" @click="handleToggleModal">
-      <i class="material-icons">add</i>
+      <i class="material-icons">add_circle_outline</i>
     </button>
   </div>
 
@@ -76,7 +80,7 @@
           @click.prevent="handleSubmit"
           class="input-modal-submit-button"
         >
-          {{ this.editMode ? "Edit" : "Add" }}
+          {{ this.editMode ? "Save" : "Create" }}
         </button>
       </form>
     </div>
@@ -175,6 +179,18 @@ export default {
   height: 100vh;
 }
 
+.item-container,
+footer {
+  background: whitesmoke;
+}
+
+.blank-slate {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .container {
   width: 100%;
   //max-width: ;
@@ -191,19 +207,29 @@ export default {
   margin: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, 300px);
-  grid-gap: 20px;
+  grid-gap: 30px;
   list-style: none;
 }
 
 .item {
+  transition: transform 0.3s ease-in-out;
+}
+
+.item:hover {
+  transform: scale(1.025);
 }
 
 .item a {
   height: 100%;
   display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .item-body {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 6px rgba(0, 0, 0, 0.05);
 }
 
 .item-controls {
@@ -212,15 +238,23 @@ export default {
 }
 
 .item-controls button {
-  padding: 5px 10px;
   border-radius: 0;
   box-shadow: none;
   background: none;
   border: none;
+  padding: 10px;
+  flex-basis: 33.3%;
+  border-top: 1px solid antiquewhite;
+  font-size: small;
+  cursor: pointer;
+}
+
+.item-controls button + button {
+  border-left: 1px solid antiquewhite;
 }
 
 .item-meta {
-  padding: 60px 10px;
+  padding: 60px 20px;
 }
 
 .floating-button {
@@ -231,11 +265,11 @@ export default {
 }
 
 .floating-button button {
-  border-radius: 10px;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 2px 30px 10px rgba(0, 0, 0, 0.15);
   width: 60px;
   height: 60px;
-  background: black;
+  background: blueviolet;
   color: whitesmoke;
   font-size: 24px;
   transition: transform 0.3s ease-in-out;
