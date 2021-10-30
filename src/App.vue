@@ -1,35 +1,37 @@
 <template>
   <section class="item-container">
-    <ul class="item-grid">
-      <li
-        v-for="(item, i) in items"
-        :key="i"
-        data-item="{{item.id}}"
-        class="item"
-      >
-        <a href="{{item.href}}" title="item.href">
-          <article class="item-body">
-            <div class="item-meta">
-              <span>{{ item.href }}</span>
-            </div>
+    <div class="container">
+      <ul class="item-grid">
+        <li
+          v-for="(item, i) in items"
+          :key="i"
+          data-item="{{item.id}}"
+          class="item"
+        >
+          <a href="{{item.href}}" title="item.href">
+            <article class="item-body">
+              <div class="item-meta">
+                <span>{{ item.href }}</span>
+              </div>
 
-            <div class="item-controls">
-              <button type="button" @click="handleUpdateItem(item.id)">
-                Edit
-              </button>
+              <div class="item-controls">
+                <button type="button" @click="handleUpdateItem(item.id)">
+                  Edit
+                </button>
 
-              <button type="button" @click="handleDeleteItem(item.id)">
-                Delete
-              </button>
+                <button type="button" @click="handleDeleteItem(item.id)">
+                  Delete
+                </button>
 
-              <button type="button" @click="handleCopyItemData(item.id)">
-                Copy URL
-              </button>
-            </div>
-          </article>
-        </a>
-      </li>
-    </ul>
+                <button type="button" @click="handleCopyItemData(item.id)">
+                  Copy URL
+                </button>
+              </div>
+            </article>
+          </a>
+        </li>
+      </ul>
+    </div>
   </section>
 
   <div class="floating-button">
@@ -38,20 +40,46 @@
     </button>
   </div>
 
-  <footer></footer>
+  <footer>
+    <div class="container">
+      <a
+        href="https://github.com/aditecco/smartpage"
+        title="SmartPage"
+        target="_blank"
+        rel="noopener"
+        >SmartPage</a
+      >
+    </div>
+  </footer>
 
   <div class="input-modal" v-if="toggleModal">
     <button class="input-modal-close-button" @click="handleToggleModal">
       <i class="material-icons">close</i>
     </button>
 
-    <form action="#">
-      <input type="text" :value="input" @change="handleChange" />
+    <div class="container">
+      <form action="#">
+        <label for="modalInput">{{
+          this.editMode ? "Edit entry" : "Add a new URL"
+        }}</label>
 
-      <button type="submit" @click.prevent="handleSubmit">
-        {{ this.editMode ? "Edit" : "Add" }}
-      </button>
-    </form>
+        <input
+          id="modalInput"
+          type="text"
+          :value="input"
+          @change="handleChange"
+          placeholder="https://example.com"
+        />
+
+        <button
+          type="submit"
+          @click.prevent="handleSubmit"
+          class="input-modal-submit-button"
+        >
+          {{ this.editMode ? "Edit" : "Add" }}
+        </button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -147,26 +175,52 @@ export default {
   height: 100vh;
 }
 
+.container {
+  width: 100%;
+  //max-width: ;
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+
 .item-container {
   flex-grow: 1;
 }
 
 .item-grid {
-  padding: 0;
+  padding: 1rem 0;
   margin: 0;
   display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-gap: 20px;
+  list-style: none;
 }
 
 .item {
+}
+
+.item a {
+  height: 100%;
+  display: block;
 }
 
 .item-body {
 }
 
 .item-controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-controls button {
+  padding: 5px 10px;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  border: none;
 }
 
 .item-meta {
+  padding: 60px 10px;
 }
 
 .floating-button {
@@ -177,32 +231,78 @@ export default {
 }
 
 .floating-button button {
+  border-radius: 10px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+  width: 60px;
+  height: 60px;
+  background: black;
+  color: whitesmoke;
+  font-size: 24px;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.floating-button button i {
+  font-size: 32px;
+  position: relative;
+  bottom: -2px;
+}
+
+.floating-button button:hover {
+  transform: translateY(-4px) scale(1.025);
 }
 
 .input-modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  //width: 100vw;
-  //height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
   z-index: 1;
-  padding: 2rem 1rem;
+  padding: 80px 1rem 2rem;
+  color: whitesmoke;
+}
+
+.input-modal .container {
+  max-width: 800px;
+}
+
+.input-modal-close-button {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  color: white;
 }
 
 .input-modal form {
-  padding: 2rem 1rem;
-  margin: 1rem;
+}
+
+.input-modal label {
+  padding: 1rem 12px;
+  display: block;
+  font-weight: bold;
+}
+
+.input-modal input {
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 18px;
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid whitesmoke;
   border-radius: 4px;
-  border: 1px solid #777;
+  outline: none;
+}
+
+.input-modal-submit-button {
+  float: right;
+  margin-top: 20px;
+  padding: 12px 32px;
+  background: whitesmoke;
+  border-radius: 4px;
 }
 
 button {
-  box-sizing: border-box;
   border: none;
-  padding: 20px;
-  line-height: 20px;
-  border-radius: 10px;
-  background: whitesmoke;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+  outline: none;
+  background: none;
 }
 </style>
