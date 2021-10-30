@@ -13,7 +13,7 @@
           class="item"
         >
           <article class="item-body">
-            <a href="{{item.href}}" title="item.href">
+            <a v-bind:href="item.href" v-bind:title="item.href">
               <div class="item-content">
                 <span>{{ item.href }}</span>
               </div>
