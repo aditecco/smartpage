@@ -29,7 +29,9 @@
     <form action="#">
       <input type="text" :value="input" @change="handleChange" />
 
-      <button type="submit" @click.prevent="handleSubmit">Add</button>
+      <button type="submit" @click.prevent="handleSubmit">
+        {{ this.editMode ? "Edit" : "Add" }}
+      </button>
     </form>
   </div>
 </template>
