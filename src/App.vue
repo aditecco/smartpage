@@ -45,7 +45,7 @@ export default {
       toggleModal: false,
       editMode: false,
       input: "",
-      items: [],
+      items: JSON.parse(localStorage.getItem("SMARTPAGE_ITEMS")) || [],
     };
   },
   methods: {
@@ -77,6 +77,7 @@ export default {
 
       this.input = "";
       this.toggleModal = false;
+      this.persistItems();
     },
 
     handleUpdateItem(id) {
@@ -91,10 +92,16 @@ export default {
       const which = this.items.findIndex((item) => item.id === id);
 
       this.items.splice(which, 1);
+
+      this.persistItems();
     },
 
     handleCopyItemData(id) {
       console.log(id);
+    },
+
+    persistItems() {
+      localStorage.setItem("SMARTPAGE_ITEMS", JSON.stringify(this.items));
     },
   },
 };
