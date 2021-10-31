@@ -295,6 +295,8 @@ footer {
   border-radius: 50%;
   width: 56px;
   height: 56px;
+  padding: 0;
+  text-align: center;
 }
 
 .floating-button button i {
@@ -353,6 +355,8 @@ footer {
   padding: 12px 32px;
   background: whitesmoke;
   border-radius: 4px;
+  color: black;
+  font-weight: normal;
 }
 
 button {
