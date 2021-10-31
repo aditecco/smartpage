@@ -15,7 +15,7 @@
           <article class="item-body">
             <a :href="item.href" :title="item.href">
               <div class="item-content">
-                <span>{{ item.href }}</span>
+                <span>{{ item.href.slice(0, 1).toUpperCase() }}</span>
               </div>
             </a>
 
@@ -203,10 +203,11 @@ footer {
 }
 
 .item-grid {
-  padding: 1rem 0;
+  padding: 60px 0;
   margin: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, 300px);
+  grid-auto-rows: 300px;
   grid-gap: 30px;
   list-style: none;
   justify-content: center;
@@ -214,9 +215,9 @@ footer {
 
 @media (min-width: 600px) {
   .item-grid {
-    padding: 60px 0;
     grid-template-columns: repeat(auto-fill, 280px);
-    justify-content: initial;
+    grid-auto-rows: 280px;
+    //justify-content: initial;
   }
 }
 
@@ -228,17 +229,39 @@ footer {
   transform: scale(1.025);
 }
 
-.item a {
+.item-body {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 6px rgba(0, 0, 0, 0.025);
+}
+
+.item a {
+  flex-grow: 1;
   display: block;
   text-decoration: none;
   color: inherit;
 }
 
-.item-body {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px 6px rgba(0, 0, 0, 0.025);
+.item-content {
+  height: 100%;
+  padding: 38px 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #777;
+}
+
+.item-content span {
+  //color: #4141fd;
+  //word-wrap: break-word;
+  font-size: 120px;
+  text-align: center;
+  font-weight: lighter;
+  display: block;
 }
 
 .item-controls {
@@ -255,6 +278,7 @@ footer {
   border-top: 1px solid antiquewhite;
   font-size: small;
   cursor: pointer;
+  color: #777;
 }
 
 .item-controls button span {
@@ -267,15 +291,6 @@ footer {
 
 .item-controls button + button {
   border-left: 1px solid antiquewhite;
-}
-
-.item-content {
-  padding: 38px 20px;
-}
-
-.item-content span {
-  color: #4141fd;
-  word-wrap: break-word;
 }
 
 .floating-button {
