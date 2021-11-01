@@ -916,6 +916,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/material-icons/-/material-icons-4.5.0.tgz#8b9e5d84a1f3fac973118c8283b000b352b44d7f"
   integrity sha512-vFMpnkKwbtJLLHbUDI163QWX9Ox28A6i1vALfAKlpBh54yp8D0cu1/YGyrU5whvaXejLSBuyS7lRwr/TdRNmhA==
 
+"@fontsource/varela-round@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/varela-round/-/varela-round-4.5.0.tgz#b1ea49df43c6fb9f71e0e1bce1a04b3dfc593a8f"
+  integrity sha512-3ucV3N0gzsYGkO+cmPiWW5YKh37u2W16MAjxzVsJWKPlJcTsjtoayhAy/y0JGXmLL+j0aof015l7TodRJhhx5w==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.npmjs.org/@hapi/address/-/address-2.1.4.tgz"
