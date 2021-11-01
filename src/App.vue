@@ -65,7 +65,7 @@
     <div class="container">
       <form action="#">
         <label for="modalHrefInput">{{
-          this.editMode ? "Edit entry" : "URL"
+          this.editMode ? "Edit URL" : "URL"
         }}</label>
 
         <input
@@ -74,10 +74,11 @@
           :value="hrefInput"
           @change="handleChange"
           placeholder="https://example.com"
+          required
         />
 
         <label for="modalLabelInput">{{
-          this.editMode ? "Edit entry" : "Label"
+          this.editMode ? "Edit label" : "Label"
         }}</label>
 
         <input
