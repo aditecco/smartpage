@@ -210,8 +210,8 @@ footer {
 
 @media (min-width: 600px) {
   .item-grid {
-    grid-template-columns: repeat(auto-fill, 280px);
-    grid-auto-rows: 280px;
+    grid-template-columns: repeat(auto-fill, 180px);
+    grid-auto-rows: 180px;
     //justify-content: initial;
   }
 }
