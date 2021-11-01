@@ -122,13 +122,17 @@ export default {
     },
 
     handleChange(e) {
-      this.hrefInput = e.currentTarget.value;
+      if (e.currentTarget.id === "modalHrefInput") {
+        this.hrefInput = e.currentTarget.value;
+      } else if (e.currentTarget.id === "modalLabelInput") {
+        this.labelInput = e.currentTarget.value;
+      }
     },
 
     handleSubmit() {
-      function Item(input, label) {
+      function Item(href, label) {
         this.id = Date.now();
-        this.href = input;
+        this.href = href;
         this.label = label;
       }
 
@@ -137,14 +141,22 @@ export default {
       if (this.editMode) {
         const i = this.items.findIndex((item) => item.id === this.editMode.id);
 
-        this.items[i] = { ...this.items[i], href: this.hrefInput };
+        this.items[i] = {
+          ...this.items[i],
+          href: this.hrefInput,
+          label: this.labelInput,
+        };
 
         this.editMode = false;
-      } else {
-        this.items.push(new Item(this.hrefInput));
+      }
+
+      //
+      else {
+        this.items.push(new Item(this.hrefInput, this.labelInput));
       }
 
       this.hrefInput = "";
+      this.labelInput = "";
       this.toggleModal = false;
       this.persistItems();
     },
@@ -155,6 +167,7 @@ export default {
 
       this.toggleModal = true;
       this.hrefInput = which.href;
+      this.labelInput = which.label;
     },
 
     handleDeleteItem(id) {
@@ -238,9 +251,11 @@ footer {
 
 @media (min-width: 600px) {
   .item-grid {
+    /*
     grid-template-columns: repeat(auto-fill, 180px);
     grid-auto-rows: 204px;
-    //justify-content: initial;
+    justify-content: initial;
+    */
   }
 }
 
@@ -287,6 +302,8 @@ footer {
   word-wrap: break-word;
   font-size: 60px;
   color: #dedede;
+  position: relative;
+  bottom: -6px;
 }
 
 .item-controls {
@@ -324,6 +341,10 @@ footer {
   font-size: 12px;
   margin-top: 10px;
   text-align: center;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .floating-button {
@@ -381,7 +402,7 @@ footer {
 }
 
 .input-modal label {
-  padding: 1rem 12px;
+  padding: 1rem 0;
   display: block;
   font-weight: bold;
 }
@@ -415,5 +436,23 @@ button {
   border: none;
   outline: none;
   background: none;
+}
+
+footer {
+  padding: 1rem;
+}
+
+footer a {
+  text-decoration: none;
+  color: inherit;
+  padding: 2px 4px;
+  font-size: small;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+}
+
+footer a:hover {
+  color: black;
+  border-bottom: 2px solid black;
 }
 </style>
