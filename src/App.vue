@@ -10,7 +10,9 @@
           <article class="item-body">
             <a :href="item.href" :title="item.href">
               <div class="item-content">
-                <span>{{ item.href.slice(0, 1).toUpperCase() }}</span>
+                <span>{{
+                  extractDomains(item.href).charAt(0).toUpperCase()
+                }}</span>
               </div>
             </a>
 
@@ -28,6 +30,10 @@
               </button>
             </div>
           </article>
+
+          <div class="span item-label">
+            {{ item.title || extractDomains(item.href) }}
+          </div>
         </li>
       </ul>
     </div>
@@ -83,6 +89,9 @@
 </template>
 
 <script>
+// import { slugToDesc } from "@/utils";
+import { STORAGE_DATA_KEY, URL_FILTER } from "@/constants";
+
 export default {
   name: "App",
   components: {},
@@ -147,7 +156,11 @@ export default {
     },
 
     persistItems() {
-      localStorage.setItem("SMARTPAGE_ITEMS", JSON.stringify(this.items));
+      localStorage.setItem(STORAGE_DATA_KEY, JSON.stringify(this.items));
+    },
+
+    extractDomains(s) {
+      return s.replace(URL_FILTER, "").split("/").slice(0, 1).toString();
     },
   },
 };
@@ -202,8 +215,9 @@ footer {
   margin: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, 160px);
-  grid-auto-rows: 160px;
-  grid-gap: 18px;
+  grid-auto-rows: 184px;
+  grid-column-gap: 18px;
+  grid-row-gap: 24px;
   list-style: none;
   justify-content: center;
 }
@@ -211,13 +225,15 @@ footer {
 @media (min-width: 600px) {
   .item-grid {
     grid-template-columns: repeat(auto-fill, 180px);
-    grid-auto-rows: 180px;
+    grid-auto-rows: 204px;
     //justify-content: initial;
   }
 }
 
 .item {
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .item:hover {
@@ -231,6 +247,7 @@ footer {
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 10px 6px rgba(0, 0, 0, 0.025);
+  flex-grow: 1;
 }
 
 .item a {
@@ -241,6 +258,7 @@ footer {
 }
 
 .item-content {
+  padding: 0 1rem;
   height: 100%;
   text-align: center;
   display: flex;
@@ -250,12 +268,10 @@ footer {
 }
 
 .item-content span {
-  //color: #4141fd;
-  //word-wrap: break-word;
-  font-size: 60px;
   text-align: center;
   font-weight: lighter;
-  display: block;
+  word-wrap: break-word;
+  font-size: 60px;
   color: #dedede;
 }
 
@@ -288,6 +304,14 @@ footer {
   border-left: 1px solid antiquewhite;
 }
 
+.item-label {
+  text-transform: uppercase;
+  color: #777;
+  font-size: 12px;
+  margin-top: 10px;
+  text-align: center;
+}
+
 .floating-button {
   position: fixed;
   bottom: 30px;
@@ -316,7 +340,7 @@ footer {
 }
 
 .floating-button button:hover {
-  transform: translateY(-4px) scale(1.025);
+  transform: translateY(-4px) scale(1.05);
 }
 
 .input-modal {
