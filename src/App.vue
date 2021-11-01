@@ -197,6 +197,7 @@ export default {
 <style>
 @import url(~normalize.css/normalize.css);
 @import url(~@fontsource/material-icons/index.css);
+@import url(~@fontsource/varela-round/index.css);
 
 *,
 *::before,
@@ -205,7 +206,7 @@ export default {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Varela Round", "system-ui", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
