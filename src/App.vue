@@ -32,7 +32,7 @@
           </article>
 
           <div class="span item-label">
-            {{ item.title || extractDomains(item.href) }}
+            {{ item.label || extractDomains(item.href) }}
           </div>
         </li>
       </ul>
@@ -64,16 +64,28 @@
 
     <div class="container">
       <form action="#">
-        <label for="modalInput">{{
-          this.editMode ? "Edit entry" : "Add a new URL"
+        <label for="modalHrefInput">{{
+          this.editMode ? "Edit entry" : "URL"
         }}</label>
 
         <input
-          id="modalInput"
+          id="modalHrefInput"
           type="text"
-          :value="input"
+          :value="hrefInput"
           @change="handleChange"
           placeholder="https://example.com"
+        />
+
+        <label for="modalLabelInput">{{
+          this.editMode ? "Edit entry" : "Label"
+        }}</label>
+
+        <input
+          id="modalLabelInput"
+          type="text"
+          :value="labelInput"
+          @change="handleChange"
+          placeholder="A label describing this entry"
         />
 
         <button
@@ -99,7 +111,8 @@ export default {
     return {
       toggleModal: false,
       editMode: false,
-      input: "",
+      hrefInput: "",
+      labelInput: "",
       items: JSON.parse(localStorage.getItem("SMARTPAGE_ITEMS")) || [],
     };
   },
@@ -109,28 +122,29 @@ export default {
     },
 
     handleChange(e) {
-      this.input = e.currentTarget.value;
+      this.hrefInput = e.currentTarget.value;
     },
 
     handleSubmit() {
-      function Item(input) {
+      function Item(input, label) {
         this.id = Date.now();
         this.href = input;
+        this.label = label;
       }
 
-      if (!this.input) return;
+      if (!this.hrefInput) return;
 
       if (this.editMode) {
         const i = this.items.findIndex((item) => item.id === this.editMode.id);
 
-        this.items[i] = { ...this.items[i], href: this.input };
+        this.items[i] = { ...this.items[i], href: this.hrefInput };
 
         this.editMode = false;
       } else {
-        this.items.push(new Item(this.input));
+        this.items.push(new Item(this.hrefInput));
       }
 
-      this.input = "";
+      this.hrefInput = "";
       this.toggleModal = false;
       this.persistItems();
     },
@@ -140,7 +154,7 @@ export default {
       const which = this.items.find((item) => item.id === id);
 
       this.toggleModal = true;
-      this.input = which.href;
+      this.hrefInput = which.href;
     },
 
     handleDeleteItem(id) {
@@ -372,6 +386,10 @@ footer {
   font-weight: bold;
 }
 
+label[for="modalLabelInput"] {
+  margin-top: 16px;
+}
+
 .input-modal input {
   width: 100%;
   padding: 12px 10px;
@@ -385,7 +403,7 @@ footer {
 
 .input-modal-submit-button {
   float: right;
-  margin-top: 20px;
+  margin-top: 28px;
   padding: 12px 32px;
   background: whitesmoke;
   border-radius: 4px;
