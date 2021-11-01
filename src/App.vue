@@ -201,9 +201,9 @@ footer {
   padding: 60px 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 300px);
-  grid-auto-rows: 300px;
-  grid-gap: 30px;
+  grid-template-columns: repeat(auto-fill, 160px);
+  grid-auto-rows: 160px;
+  grid-gap: 18px;
   list-style: none;
   justify-content: center;
 }
@@ -242,7 +242,6 @@ footer {
 
 .item-content {
   height: 100%;
-  padding: 38px 20px;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -253,10 +252,11 @@ footer {
 .item-content span {
   //color: #4141fd;
   //word-wrap: break-word;
-  font-size: 120px;
+  font-size: 60px;
   text-align: center;
   font-weight: lighter;
   display: block;
+  color: #dedede;
 }
 
 .item-controls {
@@ -269,7 +269,7 @@ footer {
   box-shadow: none;
   background: none;
   border: none;
-  padding: 12px 10px 10px;
+  padding: 12px 4px 10px;
   border-top: 1px solid antiquewhite;
   font-size: small;
   cursor: pointer;
