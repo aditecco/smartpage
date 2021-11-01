@@ -6,12 +6,7 @@
 
     <div class="container" v-show="items.length">
       <ul class="item-grid">
-        <li
-          v-for="(item, i) in items"
-          :key="i"
-          data-item="{{item.id}}"
-          class="item"
-        >
+        <li v-for="(item, i) in [...items].reverse()" :key="i" class="item">
           <article class="item-body">
             <a :href="item.href" :title="item.href">
               <div class="item-content">
@@ -29,7 +24,7 @@
               </button>
 
               <button type="button" @click="handleCopyItemData(item.id)">
-                <span> Copy URL </span>
+                <span> Copy</span>
               </button>
             </div>
           </article>
