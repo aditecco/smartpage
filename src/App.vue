@@ -119,6 +119,8 @@ export default {
   },
   methods: {
     handleToggleModal() {
+      if (this.hrefInput || this.labelInput) this.resetFields();
+
       this.toggleModal = !this.toggleModal;
     },
 
@@ -156,8 +158,7 @@ export default {
         this.items.push(new Item(this.hrefInput, this.labelInput));
       }
 
-      this.hrefInput = "";
-      this.labelInput = "";
+      this.resetFields();
       this.toggleModal = false;
       this.persistItems();
     },
@@ -181,6 +182,11 @@ export default {
 
     handleCopyItemData(id) {
       console.log(id);
+    },
+
+    resetFields() {
+      this.hrefInput = "";
+      this.labelInput = "";
     },
 
     persistItems() {
