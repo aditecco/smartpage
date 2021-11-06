@@ -25,7 +25,7 @@ export default {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.9);
-  z-index: 1;
+  z-index: 2;
   padding: 80px 1rem 2rem;
   color: whitesmoke;
 }

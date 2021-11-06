@@ -2,7 +2,9 @@
   <article class="card">
     <a :href="url" :title="label">
       <div class="card-content">
-        <span>{{ extractDomains(url).charAt(0).toUpperCase() }}</span>
+        <span>{{
+          extractDomains(url) && extractDomains(url).charAt(0).toUpperCase()
+        }}</span>
       </div>
     </a>
 
