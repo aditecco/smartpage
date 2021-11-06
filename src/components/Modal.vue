@@ -1,6 +1,6 @@
 <template>
-  <div class="input-modal" v-if="show">
-    <button class="input-modal-close-button" @click="onClose">
+  <div class="modal" v-if="show">
+    <button class="modal-close-button" @click="onClose">
       <i class="material-icons">close</i>
     </button>
 
@@ -20,4 +20,20 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1;
+  padding: 80px 1rem 2rem;
+  color: whitesmoke;
+}
+
+button {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  color: white;
+}
+</style>
