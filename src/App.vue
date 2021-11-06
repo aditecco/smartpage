@@ -24,8 +24,6 @@
     </Container>
   </section>
 
-  <FloatingButton :on-click="handleToggleModal" icon="add" />
-
   <Footer>
     <a
       href="https://github.com/aditecco/smartpage"
@@ -72,6 +70,8 @@
       </button>
     </form>
   </Modal>
+
+  <FloatingButton :on-click="handleToggleModal" icon="add" />
 </template>
 
 <script>

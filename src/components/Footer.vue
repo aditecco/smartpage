@@ -14,13 +14,13 @@ export default {
 };
 </script>
 <!-- TODO a styles not working -->
-<style scoped>
+<style>
 footer {
   padding: 1rem;
   background: whitesmoke;
 }
 
-a {
+footer a {
   text-decoration: none;
   color: inherit;
   padding: 2px 4px;
@@ -29,7 +29,7 @@ a {
   border-bottom: 2px solid transparent;
 }
 
-a:hover {
+footer a:hover {
   color: black;
   border-bottom: 2px solid black;
 }
