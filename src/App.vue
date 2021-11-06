@@ -43,8 +43,7 @@
       <input
         id="modalHrefInput"
         type="text"
-        :value="URLinput"
-        @change="handleChange"
+        v-model="URLinput"
         placeholder="https://example.com"
         required
       />
@@ -56,8 +55,7 @@
       <input
         id="modalLabelInput"
         type="text"
-        :value="labelInput"
-        @change="handleChange"
+        v-model="labelInput"
         placeholder="A label describing this entry"
       />
 
@@ -101,14 +99,6 @@ export default {
       if (this.URLinput || this.labelInput) this.resetFields();
 
       this.toggleModal = !this.toggleModal;
-    },
-
-    handleChange(e) {
-      if (e.currentTarget.id === "modalHrefInput") {
-        this.URLinput = e.currentTarget.value;
-      } else if (e.currentTarget.id === "modalLabelInput") {
-        this.labelInput = e.currentTarget.value;
-      }
     },
 
     handleSubmit() {
