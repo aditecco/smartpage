@@ -7,29 +7,14 @@
     <Container mw="initial" v-show="items.length">
       <ul class="item-grid">
         <li v-for="(item, i) in [...items].reverse()" :key="i" class="item">
-          <article class="item-body">
-            <a :href="item.href" :title="item.href">
-              <div class="item-content">
-                <span>{{
-                  extractDomains(item.href).charAt(0).toUpperCase()
-                }}</span>
-              </div>
-            </a>
-
-            <div class="item-controls">
-              <button type="button" @click="handleUpdateItem(item.id)">
-                <span>Edit</span>
-              </button>
-
-              <button type="button" @click="handleDeleteItem(item.id)">
-                <span> Delete </span>
-              </button>
-
-              <button type="button" @click="handleCopyItemData(item.id)">
-                <span> Copy</span>
-              </button>
-            </div>
-          </article>
+          <Card
+            :id="item.id"
+            :url="item.href"
+            :label="item.label"
+            :on-update="handleUpdateItem"
+            :on-delete="handleDeleteItem"
+            :on-copy="handleCopyItemData"
+          />
 
           <div class="span item-label">
             {{ item.label || extractDomains(item.href) }}
@@ -97,14 +82,16 @@
 
 <script>
 // import { slugToDesc } from "@/utils";
-import { STORAGE_DATA_KEY, URL_FILTER } from "@/constants";
+import { STORAGE_DATA_KEY } from "@/constants";
 import FloatingButton from "@/components/FloatingButton";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
+import Card from "@/components/Card";
+import { extractDomains } from "@/utils";
 
 export default {
   name: "App",
-  components: { Container, Footer, FloatingButton },
+  components: { Card, Container, Footer, FloatingButton },
   data() {
     return {
       toggleModal: false,
@@ -190,9 +177,7 @@ export default {
       localStorage.setItem(STORAGE_DATA_KEY, JSON.stringify(this.items));
     },
 
-    extractDomains(s) {
-      return s.replace(URL_FILTER, "").split("/").slice(0, 1).toString();
-    },
+    extractDomains,
   },
 };
 </script>
@@ -264,72 +249,6 @@ export default {
 
 .item:hover {
   transform: scale(1.025);
-}
-
-.item-body {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px 6px rgba(0, 0, 0, 0.025);
-  flex-grow: 1;
-}
-
-.item a {
-  flex-grow: 1;
-  display: block;
-  text-decoration: none;
-  color: inherit;
-}
-
-.item-content {
-  padding: 0 1rem;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #777;
-}
-
-.item-content span {
-  text-align: center;
-  font-weight: lighter;
-  word-wrap: break-word;
-  font-size: 60px;
-  color: #dedede;
-  position: relative;
-  bottom: -6px;
-}
-
-.item-controls {
-}
-
-.item-controls button {
-  display: inline-block;
-  width: calc(100% / 3);
-  border-radius: 0;
-  box-shadow: none;
-  background: none;
-  border: none;
-  padding: 12px 4px 10px;
-  border-top: 1px solid antiquewhite;
-  font-size: small;
-  cursor: pointer;
-  color: #777;
-}
-
-.item-controls button span {
-  border-bottom: 2px solid transparent;
-}
-
-.item-controls button span:hover {
-  border-bottom: 2px solid lightcoral;
-}
-
-.item-controls button + button {
-  border-left: 1px solid antiquewhite;
 }
 
 .item-label {
