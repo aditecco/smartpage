@@ -41,17 +41,15 @@
 
   <FloatingButton :on-click="handleToggleModal" icon="add" />
 
-  <footer>
-    <div class="container">
-      <a
-        href="https://github.com/aditecco/smartpage"
-        title="SmartPage"
-        target="_blank"
-        rel="noopener"
-        >SmartPage</a
-      >
-    </div>
-  </footer>
+  <Footer>
+    <a
+      href="https://github.com/aditecco/smartpage"
+      title="SmartPage"
+      target="_blank"
+      rel="noopener"
+      >SmartPage</a
+    >
+  </Footer>
 
   <div class="input-modal" v-if="toggleModal">
     <button class="input-modal-close-button" @click="handleToggleModal">
@@ -101,10 +99,11 @@
 // import { slugToDesc } from "@/utils";
 import { STORAGE_DATA_KEY, URL_FILTER } from "@/constants";
 import FloatingButton from "@/components/FloatingButton";
+import Footer from "@/components/Footer";
 
 export default {
   name: "App",
-  components: { FloatingButton },
+  components: { Footer, FloatingButton },
   data() {
     return {
       toggleModal: false,
@@ -219,8 +218,7 @@ export default {
   height: 100vh;
 }
 
-.item-container,
-footer {
+.item-container {
   background: whitesmoke;
 }
 
@@ -410,23 +408,5 @@ button {
   border: none;
   outline: none;
   background: none;
-}
-
-footer {
-  padding: 1rem;
-}
-
-footer a {
-  text-decoration: none;
-  color: inherit;
-  padding: 2px 4px;
-  font-size: small;
-  text-transform: uppercase;
-  border-bottom: 2px solid transparent;
-}
-
-footer a:hover {
-  color: black;
-  border-bottom: 2px solid black;
 }
 </style>
