@@ -36,48 +36,42 @@
     >
   </Footer>
 
-  <div class="input-modal" v-if="toggleModal">
-    <button class="input-modal-close-button" @click="handleToggleModal">
-      <i class="material-icons">close</i>
-    </button>
+  <Modal :show="toggleModal" :on-close="handleToggleModal">
+    <form action="#">
+      <label for="modalHrefInput">{{
+        this.editMode ? "Edit URL" : "URL"
+      }}</label>
 
-    <Container>
-      <form action="#">
-        <label for="modalHrefInput">{{
-          this.editMode ? "Edit URL" : "URL"
-        }}</label>
+      <input
+        id="modalHrefInput"
+        type="text"
+        :value="hrefInput"
+        @change="handleChange"
+        placeholder="https://example.com"
+        required
+      />
 
-        <input
-          id="modalHrefInput"
-          type="text"
-          :value="hrefInput"
-          @change="handleChange"
-          placeholder="https://example.com"
-          required
-        />
+      <label for="modalLabelInput">{{
+        this.editMode ? "Edit label" : "Label"
+      }}</label>
 
-        <label for="modalLabelInput">{{
-          this.editMode ? "Edit label" : "Label"
-        }}</label>
+      <input
+        id="modalLabelInput"
+        type="text"
+        :value="labelInput"
+        @change="handleChange"
+        placeholder="A label describing this entry"
+      />
 
-        <input
-          id="modalLabelInput"
-          type="text"
-          :value="labelInput"
-          @change="handleChange"
-          placeholder="A label describing this entry"
-        />
-
-        <button
-          type="submit"
-          @click.prevent="handleSubmit"
-          class="input-modal-submit-button"
-        >
-          {{ this.editMode ? "Save" : "Create" }}
-        </button>
-      </form>
-    </Container>
-  </div>
+      <button
+        type="submit"
+        @click.prevent="handleSubmit"
+        class="input-modal-submit-button"
+      >
+        {{ this.editMode ? "Save" : "Create" }}
+      </button>
+    </form>
+  </Modal>
 </template>
 
 <script>
@@ -88,10 +82,11 @@ import Footer from "@/components/Footer";
 import Container from "@/components/Container";
 import Card from "@/components/Card";
 import { extractDomains } from "@/utils";
+import Modal from "@/components/Modal";
 
 export default {
   name: "App",
-  components: { Card, Container, Footer, FloatingButton },
+  components: { Modal, Card, Container, Footer, FloatingButton },
   data() {
     return {
       toggleModal: false,
@@ -263,26 +258,7 @@ export default {
   text-overflow: ellipsis;
 }
 
-.input-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 1;
-  padding: 80px 1rem 2rem;
-  color: whitesmoke;
-}
-
-.input-modal-close-button {
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  color: white;
-}
-
-.input-modal form {
-}
-
-.input-modal label {
+.modal label {
   padding: 1rem 0;
   display: block;
   font-weight: bold;
@@ -292,7 +268,7 @@ label[for="modalLabelInput"] {
   margin-top: 16px;
 }
 
-.input-modal input {
+.modal input {
   width: 100%;
   padding: 12px 10px;
   font-size: 18px;
