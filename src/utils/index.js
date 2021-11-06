@@ -29,3 +29,7 @@ export function slugToDesc(url) {
 
   return desc || url;
 }
+
+export function extractDomains(s) {
+  return s && s.replace(URL_FILTER, "").split("/").slice(0, 1).toString();
+}
