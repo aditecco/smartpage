@@ -4,7 +4,7 @@
       <span>No items. Add one!</span>
     </div>
 
-    <div class="container" v-show="items.length">
+    <Container mw="initial" v-show="items.length">
       <ul class="item-grid">
         <li v-for="(item, i) in [...items].reverse()" :key="i" class="item">
           <article class="item-body">
@@ -36,7 +36,7 @@
           </div>
         </li>
       </ul>
-    </div>
+    </Container>
   </section>
 
   <FloatingButton :on-click="handleToggleModal" icon="add" />
@@ -56,7 +56,7 @@
       <i class="material-icons">close</i>
     </button>
 
-    <div class="container">
+    <Container>
       <form action="#">
         <label for="modalHrefInput">{{
           this.editMode ? "Edit URL" : "URL"
@@ -91,7 +91,7 @@
           {{ this.editMode ? "Save" : "Create" }}
         </button>
       </form>
-    </div>
+    </Container>
   </div>
 </template>
 
@@ -100,10 +100,11 @@
 import { STORAGE_DATA_KEY, URL_FILTER } from "@/constants";
 import FloatingButton from "@/components/FloatingButton";
 import Footer from "@/components/Footer";
+import Container from "@/components/Container";
 
 export default {
   name: "App",
-  components: { Footer, FloatingButton },
+  components: { Container, Footer, FloatingButton },
   data() {
     return {
       toggleModal: false,
@@ -229,13 +230,6 @@ export default {
   align-items: center;
 }
 
-.container {
-  width: 100%;
-  //max-width: ;
-  padding: 0 1rem;
-  margin: 0 auto;
-}
-
 .item-container {
   flex-grow: 1;
 }
@@ -357,10 +351,6 @@ export default {
   z-index: 1;
   padding: 80px 1rem 2rem;
   color: whitesmoke;
-}
-
-.input-modal .container {
-  max-width: 800px;
 }
 
 .input-modal-close-button {

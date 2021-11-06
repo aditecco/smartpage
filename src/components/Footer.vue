@@ -1,14 +1,16 @@
 <template>
   <footer>
-    <div class="container">
+    <Container mw="initial">
       <slot />
-    </div>
+    </Container>
   </footer>
 </template>
 
 <script>
+import Container from "@/components/Container";
 export default {
   name: "Footer",
+  components: { Container },
 };
 </script>
 <!-- TODO a styles not working -->
