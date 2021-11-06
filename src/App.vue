@@ -9,7 +9,7 @@
         <li v-for="(item, i) in [...items].reverse()" :key="i" class="item">
           <Card
             :id="item.id"
-            :url="item.href"
+            :url="item.url"
             :label="item.label"
             :on-update="handleUpdateItem"
             :on-delete="handleDeleteItem"
@@ -17,7 +17,7 @@
           />
 
           <div class="span item-label">
-            {{ item.label || extractDomains(item.href) }}
+            {{ item.label || extractDomains(item.url) }}
           </div>
         </li>
       </ul>
@@ -43,7 +43,7 @@
       <input
         id="modalHrefInput"
         type="text"
-        :value="hrefInput"
+        :value="URLinput"
         @change="handleChange"
         placeholder="https://example.com"
         required
@@ -91,41 +91,41 @@ export default {
     return {
       toggleModal: false,
       editMode: false,
-      hrefInput: "",
+      URLinput: "",
       labelInput: "",
       items: JSON.parse(localStorage.getItem("SMARTPAGE_ITEMS")) || [],
     };
   },
   methods: {
     handleToggleModal() {
-      if (this.hrefInput || this.labelInput) this.resetFields();
+      if (this.URLinput || this.labelInput) this.resetFields();
 
       this.toggleModal = !this.toggleModal;
     },
 
     handleChange(e) {
       if (e.currentTarget.id === "modalHrefInput") {
-        this.hrefInput = e.currentTarget.value;
+        this.URLinput = e.currentTarget.value;
       } else if (e.currentTarget.id === "modalLabelInput") {
         this.labelInput = e.currentTarget.value;
       }
     },
 
     handleSubmit() {
-      function Item(href, label) {
+      function Item(url, label) {
         this.id = Date.now();
-        this.href = href;
+        this.url = url;
         this.label = label;
       }
 
-      if (!this.hrefInput) return;
+      if (!this.URLinput) return;
 
       if (this.editMode) {
         const i = this.items.findIndex((item) => item.id === this.editMode.id);
 
         this.items[i] = {
           ...this.items[i],
-          href: this.hrefInput,
+          url: this.URLinput,
           label: this.labelInput,
         };
 
@@ -134,7 +134,7 @@ export default {
 
       //
       else {
-        this.items.push(new Item(this.hrefInput, this.labelInput));
+        this.items.push(new Item(this.URLinput, this.labelInput));
       }
 
       this.resetFields();
@@ -147,7 +147,7 @@ export default {
       const which = this.items.find((item) => item.id === id);
 
       this.toggleModal = true;
-      this.hrefInput = which.href;
+      this.URLinput = which.url;
       this.labelInput = which.label;
     },
 
@@ -164,7 +164,7 @@ export default {
     },
 
     resetFields() {
-      this.hrefInput = "";
+      this.URLinput = "";
       this.labelInput = "";
     },
 
