@@ -39,25 +39,25 @@
   </Footer>
 
   <Modal :show="toggleModal" :on-close="handleToggleModal">
-    <form action="#" @submit.prevent="handleSubmit">
-      <label for="modalURLinput">{{
-        this.editMode ? "Edit URL" : "URL"
-      }}</label>
+    <form class="form" action="#" @submit.prevent="handleSubmit">
+      <label for="URLinput">{{ this.editMode ? "Edit URL" : "URL" }}</label>
 
       <input
-        id="modalURLinput"
+        class="form-url-input"
+        id="URLinput"
         type="text"
         v-model="URLinput"
         placeholder="https://example.com"
         required
       />
 
-      <label for="modalLabelInput">{{
+      <label for="labelInput">{{
         this.editMode ? "Edit label" : "Label"
       }}</label>
 
       <input
-        id="modalLabelInput"
+        class="form-label-input"
+        id="labelInput"
         type="text"
         v-model="labelInput"
         placeholder="A label describing this entry"
@@ -250,17 +250,17 @@ button {
   text-overflow: ellipsis;
 }
 
-.modal label {
+.form label {
   padding: 1rem 0;
   display: block;
   font-weight: bold;
 }
 
-label[for="modalLabelInput"] {
+label[for="labelInput"] {
   margin-top: 16px;
 }
 
-.modal input {
+.form input {
   width: 100%;
   padding: 12px 10px;
   font-size: 18px;
