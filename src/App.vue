@@ -17,7 +17,7 @@
             :label="card.label"
             :on-update="handleUpdateCard"
             :on-delete="handleDeleteCard"
-            :on-copy="handleCopyItemData"
+            :on-copy="handleCopyCardData"
           />
 
           <div class="span card-label">
@@ -148,7 +148,7 @@ export default {
       this.persistCards();
     },
 
-    handleCopyItemData(id) {
+    handleCopyCardData(id) {
       console.log(id);
     },
 
