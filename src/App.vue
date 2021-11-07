@@ -1,23 +1,27 @@
 <template>
-  <section class="item-container">
-    <div class="blank-slate" v-show="!items.length">
+  <section class="card-container">
+    <div class="blank-slate" v-if="!cards.length">
       <span>No items. Add one!</span>
     </div>
 
-    <Container mw="initial" v-show="items.length">
-      <ul class="item-grid">
-        <li v-for="(item, i) in [...items].reverse()" :key="i" class="item">
+    <Container mw="initial" v-if="cards.length">
+      <ul class="card-grid">
+        <li
+          v-for="(card, i) in [...cards].reverse()"
+          :key="i"
+          class="card-wrapper"
+        >
           <Card
-            :id="item.id"
-            :url="item.url"
-            :label="item.label"
-            :on-update="handleUpdateItem"
-            :on-delete="handleDeleteItem"
+            :id="card.id"
+            :url="card.url"
+            :label="card.label"
+            :on-update="handleUpdateCard"
+            :on-delete="handleDeleteCard"
             :on-copy="handleCopyItemData"
           />
 
-          <div class="span item-label">
-            {{ item.label || extractDomains(item.url) }}
+          <div class="span card-label">
+            {{ card.label || extractDomains(card.url) }}
           </div>
         </li>
       </ul>
@@ -35,13 +39,13 @@
   </Footer>
 
   <Modal :show="toggleModal" :on-close="handleToggleModal">
-    <form action="#">
-      <label for="modalHrefInput">{{
+    <form action="#" @submit.prevent="handleSubmit">
+      <label for="modalURLinput">{{
         this.editMode ? "Edit URL" : "URL"
       }}</label>
 
       <input
-        id="modalHrefInput"
+        id="modalURLinput"
         type="text"
         v-model="URLinput"
         placeholder="https://example.com"
@@ -59,11 +63,7 @@
         placeholder="A label describing this entry"
       />
 
-      <button
-        type="submit"
-        @click.prevent="handleSubmit"
-        class="input-modal-submit-button"
-      >
+      <button type="submit" class="submit-button">
         {{ this.editMode ? "Save" : "Create" }}
       </button>
     </form>
@@ -73,7 +73,6 @@
 </template>
 
 <script>
-// import { slugToDesc } from "@/utils";
 import { STORAGE_DATA_KEY } from "@/constants";
 import FloatingButton from "@/components/FloatingButton";
 import Footer from "@/components/Footer";
@@ -91,7 +90,7 @@ export default {
       editMode: false,
       URLinput: "",
       labelInput: "",
-      items: JSON.parse(localStorage.getItem("SMARTPAGE_ITEMS")) || [],
+      cards: JSON.parse(localStorage.getItem(STORAGE_DATA_KEY)) || [],
     };
   },
   methods: {
@@ -102,7 +101,7 @@ export default {
     },
 
     handleSubmit() {
-      function Item(url, label) {
+      function Card(url, label) {
         this.id = Date.now();
         this.url = url;
         this.label = label;
@@ -111,10 +110,10 @@ export default {
       if (!this.URLinput) return;
 
       if (this.editMode) {
-        const i = this.items.findIndex((item) => item.id === this.editMode.id);
+        const i = this.cards.findIndex((card) => card.id === this.editMode.id);
 
-        this.items[i] = {
-          ...this.items[i],
+        this.cards[i] = {
+          ...this.cards[i],
           url: this.URLinput,
           label: this.labelInput,
         };
@@ -124,29 +123,29 @@ export default {
 
       //
       else {
-        this.items.push(new Item(this.URLinput, this.labelInput));
+        this.cards.push(new Card(this.URLinput, this.labelInput));
       }
 
       this.resetFields();
       this.toggleModal = false;
-      this.persistItems();
+      this.persistCards();
     },
 
-    handleUpdateItem(id) {
+    handleUpdateCard(id) {
       this.editMode = { editing: true, id };
-      const which = this.items.find((item) => item.id === id);
+      const which = this.cards.find((card) => card.id === id);
 
       this.toggleModal = true;
       this.URLinput = which.url;
       this.labelInput = which.label;
     },
 
-    handleDeleteItem(id) {
-      const which = this.items.findIndex((item) => item.id === id);
+    handleDeleteCard(id) {
+      const which = this.cards.findIndex((card) => card.id === id);
 
-      this.items.splice(which, 1);
+      this.cards.splice(which, 1);
 
-      this.persistItems();
+      this.persistCards();
     },
 
     handleCopyItemData(id) {
@@ -158,8 +157,8 @@ export default {
       this.labelInput = "";
     },
 
-    persistItems() {
-      localStorage.setItem(STORAGE_DATA_KEY, JSON.stringify(this.items));
+    persistCards() {
+      localStorage.setItem(STORAGE_DATA_KEY, JSON.stringify(this.cards));
     },
 
     extractDomains,
@@ -178,6 +177,12 @@ export default {
   box-sizing: border-box;
 }
 
+button {
+  border: none;
+  outline: none;
+  background: none;
+}
+
 #app {
   font-family: "Varela Round", "system-ui", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -189,10 +194,6 @@ export default {
   height: 100vh;
 }
 
-.item-container {
-  background: whitesmoke;
-}
-
 .blank-slate {
   height: 100%;
   display: flex;
@@ -200,11 +201,12 @@ export default {
   align-items: center;
 }
 
-.item-container {
+.card-container {
+  background: whitesmoke;
   flex-grow: 1;
 }
 
-.item-grid {
+.card-grid {
   padding: 60px 0;
   margin: 0;
   display: grid;
@@ -217,7 +219,7 @@ export default {
 }
 
 @media (min-width: 600px) {
-  .item-grid {
+  .card-grid {
     /*
     grid-template-columns: repeat(auto-fill, 180px);
     grid-auto-rows: 204px;
@@ -226,17 +228,17 @@ export default {
   }
 }
 
-.item {
+.card-wrapper {
   transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
 }
 
-.item:hover {
+.card-wrapper:hover {
   transform: scale(1.025);
 }
 
-.item-label {
+.card-label {
   text-transform: uppercase;
   color: #777;
   font-size: 12px;
@@ -269,7 +271,7 @@ label[for="modalLabelInput"] {
   outline: none;
 }
 
-.input-modal-submit-button {
+.submit-button {
   float: right;
   margin-top: 28px;
   padding: 12px 32px;
@@ -277,11 +279,5 @@ label[for="modalLabelInput"] {
   border-radius: 4px;
   color: black;
   font-weight: normal;
-}
-
-button {
-  border: none;
-  outline: none;
-  background: none;
 }
 </style>
