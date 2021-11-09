@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { STORAGE_DATA_KEY } from "@/constants";
+import { LAMBDA_LOCATION, STORAGE_DATA_KEY } from "@/constants";
 import FloatingButton from "@/components/FloatingButton";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
@@ -148,8 +148,25 @@ export default {
       this.persistCards();
     },
 
-    handleCopyCardData(id) {
+    async handleCopyCardData(id) {
       console.log(id);
+      //
+      const response = await this.fetchFavicon(id);
+
+      const container = document.querySelector(`[data-favicon-id=fvc-${id}]`);
+      container.src = response;
+    },
+
+    async fetchFavicon(id) {
+      const which = this.cards.find((card) => card.id === id);
+
+      const faviconData = await fetch(
+        `/${LAMBDA_LOCATION}fetchFavicons?domain=https://${this.extractDomains(
+          which.url
+        )}&size=64`
+      );
+
+      return faviconData?.text();
     },
 
     resetFields() {
