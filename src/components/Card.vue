@@ -5,6 +5,8 @@
         <span>{{
           extractDomains(url) && extractDomains(url).charAt(0).toUpperCase()
         }}</span>
+
+        <img :data-favicon-id="'fvc-' + id" src="" alt="" />
       </div>
     </a>
 
@@ -14,11 +16,11 @@
       </button>
 
       <button type="button" @click="onDelete(id)">
-        <span> Delete </span>
+        <span>Delete</span>
       </button>
 
       <button type="button" @click="onCopy(id)">
-        <span> Copy</span>
+        <span>Copy</span>
       </button>
     </div>
   </article>
