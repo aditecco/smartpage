@@ -26,13 +26,17 @@ button {
   background: blueviolet;
   color: whitesmoke;
   font-size: 24px;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, outline 0.2s ease;
   cursor: pointer;
   border-radius: 50%;
   width: 56px;
   height: 56px;
   padding: 0;
   text-align: center;
+}
+
+button:active {
+  outline: 6px solid #8a2be28c;
 }
 
 button:hover {
