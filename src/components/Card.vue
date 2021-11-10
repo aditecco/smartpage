@@ -2,11 +2,17 @@
   <article class="card">
     <a :href="url" :title="label">
       <div class="card-content">
-        <span>{{
+        <span v-if="!favicon" class="card-content-initial">{{
           extractDomains(url) && extractDomains(url).charAt(0).toUpperCase()
         }}</span>
 
-        <img :data-favicon-id="'fvc-' + id" src="" alt="" />
+        <img
+          v-if="favicon"
+          class="card-content-favicon"
+          :data-favicon-id="'fvc-' + id"
+          :src="favicon"
+          :alt="`Favicon for ${extractDomains(url)}`"
+        />
       </div>
     </a>
 
@@ -31,7 +37,7 @@ import { extractDomains } from "@/utils";
 
 export default {
   name: "Card",
-  props: ["id", "url", "label", "onUpdate", "onDelete", "onCopy"],
+  props: ["id", "url", "label", "onUpdate", "onDelete", "onCopy", "favicon"],
   methods: {
     extractDomains,
   },
@@ -66,7 +72,7 @@ a {
   color: #777;
 }
 
-.card-content span {
+.card-content-initial {
   text-align: center;
   font-weight: lighter;
   word-wrap: break-word;
@@ -74,6 +80,13 @@ a {
   color: #dedede;
   position: relative;
   bottom: -6px;
+}
+
+.card-content-favicon {
+  position: relative;
+  bottom: -6px;
+  display: block;
+  width: 46px;
 }
 
 .card-controls {
