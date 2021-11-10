@@ -15,6 +15,7 @@
             :id="card.id"
             :url="card.url"
             :label="card.label"
+            :favicon="card.favicon"
             :on-update="handleUpdateCard"
             :on-delete="handleDeleteCard"
             :on-copy="handleCopyCardData"
@@ -80,12 +81,15 @@ import Container from "@/components/Container";
 import Card from "@/components/Card";
 import { extractDomains } from "@/utils";
 import Modal from "@/components/Modal";
+import { Card as CardClass } from "./models/Card";
 
 export default {
   name: "App",
   components: { Modal, Card, Container, Footer, FloatingButton },
   data() {
     return {
+      loading: false,
+      error: false,
       toggleModal: false,
       editMode: false,
       URLinput: "",
@@ -100,13 +104,7 @@ export default {
       this.toggleModal = !this.toggleModal;
     },
 
-    handleSubmit() {
-      function Card(url, label) {
-        this.id = Date.now();
-        this.url = url;
-        this.label = label;
-      }
-
+    async handleSubmit() {
       if (!this.URLinput) return;
 
       if (this.editMode) {
@@ -121,9 +119,13 @@ export default {
         this.editMode = false;
       }
 
-      //
+      // Card creation
       else {
-        this.cards.push(new Card(this.URLinput, this.labelInput));
+        this.loading = true;
+        const favicon = await this.fetchFavicon(this.URLinput);
+
+        this.cards.push(new CardClass(this.URLinput, this.labelInput, favicon));
+        this.loading = false;
       }
 
       this.resetFields();
@@ -150,20 +152,13 @@ export default {
 
     async handleCopyCardData(id) {
       console.log(id);
-      //
-      const response = await this.fetchFavicon(id);
-
-      const container = document.querySelector(`[data-favicon-id=fvc-${id}]`);
-      container.src = response;
     },
 
-    async fetchFavicon(id) {
-      const which = this.cards.find((card) => card.id === id);
-
+    async fetchFavicon(url, size = 48) {
       const faviconData = await fetch(
         `/${LAMBDA_LOCATION}fetchFavicons?domain=https://${this.extractDomains(
-          which.url
-        )}&size=64`
+          url
+        )}&size=${size}`
       );
 
       return faviconData?.text();
