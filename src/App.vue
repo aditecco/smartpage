@@ -81,7 +81,7 @@ import Container from "@/components/Container";
 import Card from "@/components/Card";
 import { extractDomains } from "@/utils";
 import Modal from "@/components/Modal";
-import { Card as CardClass } from "./models/Card";
+import { Card as __Card__ } from "./models/Card";
 
 export default {
   name: "App",
@@ -124,7 +124,7 @@ export default {
         this.loading = true;
         const favicon = await this.fetchFavicon(this.URLinput);
 
-        this.cards.push(new CardClass(this.URLinput, this.labelInput, favicon));
+        this.cards.push(new __Card__(this.URLinput, this.labelInput, favicon));
         this.loading = false;
       }
 
@@ -219,11 +219,11 @@ button {
 }
 
 .card-grid {
-  padding: 60px 0;
+  padding: 60px 5%;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 160px);
-  grid-auto-rows: 184px;
+  grid-template-columns: repeat(auto-fill, 140px);
+  grid-auto-rows: 164px;
   grid-column-gap: 18px;
   grid-row-gap: 24px;
   list-style: none;
