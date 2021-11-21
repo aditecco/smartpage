@@ -124,6 +124,7 @@ export default {
 
       // Card creation
       else {
+        this.toggleModal = false;
         this.loading = true;
         const favicon = await this.fetchFavicon(this.URLinput);
 
@@ -132,7 +133,6 @@ export default {
       }
 
       this.resetFields();
-      this.toggleModal = false;
       this.persistCards();
     },
 
