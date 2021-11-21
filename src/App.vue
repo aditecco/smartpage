@@ -1,5 +1,7 @@
 <template>
   <section class="card-container">
+    <Spinner v-show="loading" />
+
     <div class="blank-slate" v-if="!cards.length">
       <span>No items. Add one!</span>
     </div>
@@ -82,10 +84,11 @@ import Card from "@/components/Card";
 import { extractDomains } from "@/utils";
 import Modal from "@/components/Modal";
 import { Card as __Card__ } from "./models/Card";
+import Spinner from "@/components/Spinner";
 
 export default {
   name: "App",
-  components: { Modal, Card, Container, Footer, FloatingButton },
+  components: { Spinner, Modal, Card, Container, Footer, FloatingButton },
   data() {
     return {
       loading: false,
