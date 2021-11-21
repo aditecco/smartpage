@@ -26,11 +26,12 @@ const handler: Handler = async (event, context) => {
     ).toString("base64")}`;
 
     return {
-      statusCode: 200,
+      statusCode: res.status,
       body,
     };
   } catch (err) {
     return {
+      // TODO proper error handling w/ axios types
       statusCode: 400,
       body: JSON.stringify(err),
     };
