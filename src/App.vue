@@ -158,13 +158,21 @@ export default {
     },
 
     async fetchFavicon(url, size = 48) {
-      const faviconData = await fetch(
-        `/${LAMBDA_LOCATION}fetchFavicons?domain=https://${this.extractDomains(
-          url
-        )}&size=${size}`
-      );
+      try {
+        const faviconData = await fetch(
+          `/${LAMBDA_LOCATION}fetchFavicons?domain=https://${this.extractDomains(
+            url
+          )}&size=${size}`
+        );
 
-      return faviconData?.text();
+        return faviconData?.text();
+      } catch (err) {
+        console.error("@fetchFavicon: ", err);
+
+        // Will trigger v-if="!favicon" in Card.vue
+        // TODO return a default favicon stored in the app
+        return "";
+      }
     },
 
     resetFields() {
