@@ -1,4 +1,4 @@
-# https://docs.netlify.com/configure-builds/file-based-configuration/
+# https://docs.netlify.com/configure-builds/file-based-configuration/%20#functions
 
 [functions]
   directory = "lambda"
