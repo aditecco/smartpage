@@ -9,7 +9,7 @@
     <Container mw="initial" v-if="cards.length">
       <ul class="card-grid">
         <li
-          v-for="(card, i) in [...cards].reverse()"
+          v-for="(card, i) in [...cards].slice(0, 10).reverse()"
           :key="i"
           class="card-wrapper"
         >
@@ -28,6 +28,24 @@
           </div>
         </li>
       </ul>
+
+      <ol class="table">
+        <li
+          v-for="(card, i) in [...cards].slice(10).reverse()"
+          :key="i"
+          class="row-wrapper"
+        >
+          <Row
+            :id="card.id"
+            :url="card.url"
+            :label="card.label"
+            :favicon="card.favicon"
+            :on-update="handleUpdateCard"
+            :on-delete="handleDeleteCard"
+            :on-copy="handleCopyCardData"
+          />
+        </li>
+      </ol>
     </Container>
   </section>
 
@@ -85,10 +103,11 @@ import { extractDomains } from "@/utils";
 import Modal from "@/components/Modal";
 import { Card as __Card__ } from "./models/Card";
 import Spinner from "@/components/Spinner";
+import Row from "@/components/Row";
 
 export default {
   name: "App",
-  components: { Spinner, Modal, Card, Container, Footer, FloatingButton },
+  components: { Row, Spinner, Modal, Card, Container, Footer, FloatingButton },
   data() {
     return {
       loading: false,
@@ -242,10 +261,19 @@ button {
   display: grid;
   grid-template-columns: repeat(auto-fill, 140px);
   grid-auto-rows: 164px;
-  grid-column-gap: 18px;
-  grid-row-gap: 24px;
+  grid-column-gap: 48px;
+  grid-row-gap: 44px;
   list-style: none;
   justify-content: center;
+}
+
+.table {
+  list-style: none;
+  padding: 60px 5%;
+}
+
+.row-wrapper:last-child .row {
+  border-bottom: 1px solid #ccc;
 }
 
 @media (min-width: 600px) {
