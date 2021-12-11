@@ -6,7 +6,7 @@
       <span>No items. Add one!</span>
     </div>
 
-    <Container mw="initial" v-if="cards.length">
+    <Container mw="1080px" v-if="cards.length">
       <ul class="card-grid">
         <li
           v-for="(card, i) in [...cards].slice(0, 10).reverse()"
@@ -265,7 +265,7 @@ button {
   grid-template-columns: repeat(auto-fill, 140px);
   grid-auto-rows: 164px;
   grid-column-gap: 48px;
-  grid-row-gap: 44px;
+  grid-row-gap: 54px;
   list-style: none;
   justify-content: center;
 }
@@ -279,6 +279,10 @@ button {
   border-bottom: 1px solid #ccc;
 }
 
+.row-wrapper + .row-wrapper {
+  margin-top: 2rem;
+}
+
 @media (min-width: 600px) {
   .card-grid {
     /*
@@ -286,6 +290,10 @@ button {
     grid-auto-rows: 204px;
     justify-content: initial;
     */
+  }
+
+  .row-wrapper + .row-wrapper {
+    margin-top: 0;
   }
 }
 
