@@ -45,17 +45,18 @@ export default {
 <style scoped>
 .row {
   display: flex;
-  border-top: 1px solid #ccc;
+  flex-direction: column;
   padding: 0.25rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 a {
   display: flex;
+  align-items: center;
   text-decoration: none;
   color: inherit;
-  flex: 1 1 0;
-  align-items: center;
-  justify-content: flex-start;
+  padding: 1.15rem 0;
 }
 
 .row-content-favicon {
@@ -73,8 +74,9 @@ a {
 }
 
 .row-controls {
-  margin-left: 1rem;
-  flex: 0 0 20%;
+  margin-top: 10px;
+  min-width: 180px;
+  border-top: 1px solid #ccc;
 }
 
 .row-controls button {
@@ -90,11 +92,43 @@ a {
   color: #777;
 }
 
+.row-controls button:nth-child(1) {
+  border-right: 1px solid #ccc;
+}
+
+.row-controls button:nth-child(3) {
+  border-left: 1px solid #ccc;
+}
+
 .row-controls button span {
   border-bottom: 2px solid transparent;
 }
 
 .row-controls button span:hover {
   border-bottom: 2px solid lightcoral;
+}
+
+@media (min-width: 600px) {
+  .row {
+    flex-direction: row;
+    border-width: 1px 0 0 0;
+    border-radius: 0;
+  }
+
+  a {
+    flex: 1 1 0;
+    justify-content: flex-start;
+    padding: 0;
+  }
+
+  .row-controls {
+    margin-top: 0;
+    margin-left: 1rem;
+    border: 0;
+  }
+
+  .row-controls button:nth-child(n) {
+    border: 0;
+  }
 }
 </style>
