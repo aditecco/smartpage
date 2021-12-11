@@ -121,7 +121,9 @@ export default {
   },
   methods: {
     handleToggleModal() {
+      // Reset the previous state
       if (this.URLinput || this.labelInput) this.resetFields();
+      if (this.editMode) this.editMode = false;
 
       this.toggleModal = !this.toggleModal;
     },
