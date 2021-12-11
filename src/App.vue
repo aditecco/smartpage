@@ -141,6 +141,7 @@ export default {
         };
 
         this.editMode = false;
+        this.toggleModal = false;
       }
 
       // Card creation
